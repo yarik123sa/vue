@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+<body>
+<style>
+    .items{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }  .items div{
+        flex:  0 1 30%;
+        text-align: center;
+
+       border: 1px solid red;
+       }
+</style>
+<!--Задача 6. Задача. На кухню поступають замовлення. Спочатку ми додаємо їх у список “Очікують на виконання”,
+якщо повар береться робити — замовлення переходить у список “Виконуються”,
+  якщо замовлення виконано — переходить у список “Готові до виносу”. Якщо натиснути на “Подано” - страва зникає з таблиці-->
+<!--Підказка: тут треба зберігати 3 масиви страв ( waitingList, processingList, completedList)-->
+<div id="app">
+    <h2>додати нове замовлення</h2>
+    <input type="text" v-model.lazy="food">
+
+    <button @click="addFood">
+        додати страву
+    </button>
+    <div class="items" v-show="isDataValid">
+        <div class="waiting">
+            <h2>очікують на приготування</h2>
+
+            <div v-for="(item,index ) in waitingList " :key="index"  >
+                {{item}}     <button @click="addFoodToProcessing(index)" >готувати </button>
+            </div>
+
+        </div>
+        <div class="processing" >
+            <h2>виконуються</h2>
+            <div v-for="(item,index ) in processingList " :key="index"  >
+                {{item}}     <button  @click="addFoodFinish(index)">приготовлено </button>
+            </div>
+        </div>
+        <div class="finish" >
+            <h2>готові до виносу</h2>
+
+            <div v-for="(item,index ) in completedList " :key="index"  >
+                {{item}}     <button @click="serveTheDish">подати  </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                waitingList:[],
+                processingList:[],
+                completedList:[],
+                food:null,
+            }
+        },
+        computed:{
+
+            isDataValid() {
+                return  !!this.food;
+            }
+        },
+        methods: {
+            addFood(){
+                this.waitingList.push(this.food)
+            },
+            addFoodToProcessing(index){
+                const item = this.waitingList.splice(index, 1)[0];
+                this.processingList.push(item);
+            },
+            addFoodFinish(index){
+                const item = this.processingList.splice(index, 1)[0];
+                this.completedList.push(item);
+            },
+            serveTheDish(index){
+               return  this.completedList.splice(index, 1)[0];
+
+            }
+
+
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>

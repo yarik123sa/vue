@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<!--З випадаючого списку вибираємо клас квитка у літаку. Якщо-->
+
+<!--1) бізнес - виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску (так/ні)),
+на фоні зображення бізнес кают-->
+
+<!--2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.-->
+<div id="app">
+    <h2>виберіть клас квитка </h2>
+
+    <select v-model="ticketClass">
+        <option value="business">Бізнес</option>
+        <option value="econom">економ</option>
+    </select>
+        <div v-if="isTicketSelected">
+            <h2>
+                вибраний вами клас {{ticketClass}}
+            </h2>
+
+        <div v-if="isBusiness">
+            <img src="img.png" alt="">
+                <select  v-model="optionsForBusiness">
+
+                    <option value="shrimp">креветки</option>
+                    <option value="cognac">Коньяк</option>
+                </select>
+
+
+
+            <div v-if="snackForBusiness">
+
+                <h2>бажаєте закуску</h2>
+                <select >
+
+                    <option value="yes">так </option>
+                    <option value="no">ні</option>
+                </select>
+            </div>
+        </div>
+            <br>
+
+<div v-if="isEconom">
+    <img src="img_1.png" alt="">
+    <select  v-model="optionsForEconom">
+        <option value="burger">бургер</option>
+        <option value="beer">пиво</option>
+    </select>
+</div>
+
+        </div>
+</div>
+
+<script>
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+                ticketClass:null,
+                optionsForBusiness:null,
+                optionsForEconom:null,
+            }
+
+        },
+        computed:{
+            isTicketSelected(){
+                return this.ticketClass !== null && this.ticketClass !== "";
+            },
+            isBusiness(){
+                return this.ticketClass === "business";
+            },
+            isEconom(){
+                return this.ticketClass === "econom";
+            },
+            snackForBusiness(){
+                return this.optionsForBusiness === "cognac";
+            }
+
+
+
+
+        }
+
+
+    }).mount('#app')
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<style>
+    .green{
+        border: 3px solid green;
+    }
+    .red{
+        border: 3px solid red;
+    }
+</style>
+<!--Задача 3. Елемент тренажера англійської. Виводимо зображення елемента і слово. Користувач вводить відповідь.-->
+<!--Якщо вірно – відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), - -->
+<!--якщо ні - то відтворюємо фразу «Невірно, спробуйте ще раз» (і додаємо червону рамку)-->
+
+<div id="app">
+
+
+    <div :class="addBorder" >
+
+        <div class="image">
+            <img src="table.png" alt="">
+        </div>
+   <h2>твій переклад</h2>
+        <input type="text" v-model.lazy="translate">
+
+
+        <button @click="checkTranslate">перевіти</button>
+
+        <div v-show="isEntered">
+            <div v-if="checkTranslate">
+                Добре. Молодець!
+            </div>
+            <div v-else>
+                Невірно, спробуйте ще раз
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const { createApp } = Vue
+const wordTranslate = 'стіл'
+    createApp({
+        data() {
+            return {
+                translate:null,
+            }
+        },
+        computed:{
+            checkTranslate(){
+                return this.translate == wordTranslate;
+
+            },
+            addBorder(){
+                let border ;
+                if(this.checkTranslate ){
+                    border = 'green';
+                }else if(this.isEntered && !this.checkTranslate) {
+                    border = 'red';
+                }
+                return border;
+            },
+            isEntered(){
+                return  !!this.translate
+            }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>

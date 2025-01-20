@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+<style>
+    .link{
+        color: #67bbff;
+
+    }
+</style>
+<body>
+<!--Задача 5. Самостійно сформуйте масив даних та виведіть фрагмент на зразок поданого (дані не обов’язково повинні співпадати)-->
+<div id="app">
+        <div v-for="item in isList" :key="item.id" >
+            <h1>
+                {{item.siteTitle}}
+            </h1>
+            <h2>
+                {{item.title}}
+            </h2>
+            <h3 >{{item.description}}</h3>
+            <h4 class="link" > {{item.mainlink}}</h4>
+            <hr>
+        </div>
+</div>
+
+<script>
+
+    const list = [
+        {
+            id: '1',
+            siteTitle: 'Vue.js',
+            title: 'Vue.js - The Progressive JavaScript Framework | Vue.js',
+            description: 'The Progressive JavaScript Framework · Approachable. Builds on top of standard HTML, CSS and JavaScript with intuitive API and world-class documentation',
+            mainlink: 'https://vuejs.org',
+
+        },
+        {
+            id: '2',
+            siteTitle: 'Vue',
+            title: 'Vue | Cinema Listings and Latest Movies | Book Film Tickets',
+            description: 'See the latest films and live events in 2D, 3D, IMAX and IMAX 3D at Vue cinemas. Browse movie times at a cinema near you and book your tickets online today.',
+            mainlink: 'https://www.myvue.com',
+
+        },
+        {
+            id: '3',
+            siteTitle: 'Wikipedia',
+            title: 'Vue.js',
+            description: 'Vue.js is an open-source model–view–viewmodel front end JavaScript framework for building user interfaces and single-page applications.',
+            mainlink: 'https://en.wikipedia.org/wiki/Vue.js',
+
+        },
+        {
+            id: '4',
+            siteTitle: 'GitHub',
+            title: 'GitHub - vuejs/vue: This is the repo for Vue 2. For Vue 3, go ...',
+            description: 'Vue (pronounced /vjuː/ , like view) is a progressive framework for building user interfaces. It is designed from the ground up to be incrementally adoptable, ...',
+            mainlink: 'https://github.com › vuejs',
+
+        },
+    ];
+
+    const { createApp } = Vue
+
+    createApp({
+        data() {
+            return {
+            }
+        },
+        computed:{
+            isList(){
+                return list;
+            }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task-1</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<style>
+    .blue {
+        color: blue;
+    }
+    .red {
+        color: red;
+    }
+</style>
+
+
+<!--Задача 1. Вводимо логіна і пароль. Якщо логін вірний відображаємо смайл. Якщо ні, то:-->
+<!--1) якщо логін = Іван – колір повідомлення про помилку синій-->
+<!--2) якщо хтось інший, то колір повідомлення червоний-->
+
+<div id="app">
+    <label>
+        login
+        <input type="text" v-model.lazy="userLogin">
+    </label>
+    <br>
+    <label>
+        password
+        <input type="number" v-model.lazy="userPassword">
+    </label>
+
+    <button @click="checkAuth">go</button>
+
+    <template v-if="isDataValid">
+        <div v-if="isAuthenticated">
+            😊
+        </div>
+        <div :class="textColor" v-else-if="  userLogin === 'Ivan'">
+            Введіть корректні логін та пароль!
+        </div>
+        <h2 :class="textColor" v-else-if="hasTriedToLogin">Login or password is incorrect!</h2>
+    </template>
+</div>
+
+<script>
+    const { createApp } = Vue;
+
+    const correctPassword = 1234;
+    const correctLogin = "Ivan";
+
+    createApp({
+        data() {
+            return {
+                userLogin: '',
+                userPassword: '',
+                isAuthenticated: false,
+                hasTriedToLogin: false
+            };
+        },
+        computed: {
+            isDataValid() {
+                return this.userLogin && this.userPassword;
+            },
+            textColor() {
+                if (!this.isAuthenticated && this.hasTriedToLogin) {
+                    return this.userLogin === "Ivan" ? "blue" : "red";
+                }
+                return "";
+            }
+        },
+        methods: {
+            checkAuth() {
+                this.hasTriedToLogin = true;
+                this.isAuthenticated = this.userLogin === correctLogin && this.userPassword === correctPassword;
+            }
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>
